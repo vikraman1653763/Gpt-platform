@@ -3,12 +3,17 @@ import { useAppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
 import moment from "moment";
 
-const Sidebar = () => {
+const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
   const { navigate, chats, setSelectedChat, theme, setTheme, user } =
     useAppContext();
   const [search, setSearch] = useState("");
   return (
-    <div className=" flex flex-col h-screen min-w-72 p-5 dark:bg-gradient-to-b from-[#242124]/30 to-[#000]/30 border-r border-[#80609f]/30 backdrop-blur-3xl transition-all duration-500 max-md:absolute left-0 z-10">
+    <div
+      className={`flex flex-col h-screen min-w-72 p-5 dark:bg-gradient-to-b from-[#242124]/30 to-[#000]/30 border-r border-[#80609f]/30 backdrop-blur-3xl transition-all duration-500 max-md:absolute left-0 z-1 
+        ${
+        !isMenuOpen && "max-md:-translate-x-full"
+      }`}
+    >
       <img
         src={theme === "dark" ? assets.logo_full : assets.logo_full_dark}
         alt="logo"
@@ -47,6 +52,11 @@ const Sidebar = () => {
           .map((chat) => (
             <div
               key={chat._id}
+              onClick={() => {
+          navigate("/")
+          setIsMenuOpen(false)
+          setSelectedChat(chat)
+        }}
               className="p-2 px-4 dark:bg-[#57317c]/10 border border-gray-300 dark:border-[#80609f]/15 rounded-md cursor-pointer flex justify-between group"
             >
               <div>
@@ -69,7 +79,10 @@ const Sidebar = () => {
       </div>
       {/* community images  */}
       <div
-        onClick={() => navigate("/community")}
+        onClick={() => {
+          navigate("/community")
+          setIsMenuOpen(false)
+        }}
         className="flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md cursor-pointer hover:scale-103 transition-all"
       >
         <img
@@ -83,7 +96,8 @@ const Sidebar = () => {
       </div>
       {/* Credit Purchase   */}
       <div
-        onClick={() => navigate("/credits")}
+        onClick={() => {navigate("/credits") 
+          setIsMenuOpen(false)}}
         className="flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md cursor-pointer hover:scale-103 translate-all"
       >
         <img
@@ -141,6 +155,15 @@ const Sidebar = () => {
           />
         )}
       </div>
+      {/* close  */}
+      <img
+        onClick={() => {
+          setIsMenuOpen(false);
+        }}
+        src={assets.close_icon}
+        alt="close"
+        className=" absolute top-3 right-3 w-5 h-5 cursor-pointer md:hidden not-dark:invert"
+      />
     </div>
   );
 };

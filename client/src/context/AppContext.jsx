@@ -17,7 +17,7 @@ export const AppContextProvider = ({ children }) => {
 
   const fetchUsersCharts = async () => {
     setChats(dummyChats);
-    setSelectedChat(dummyChats[0]);
+    setSelectedChat();
   };
   useEffect(()=>{
     if(theme === 'dark'){
@@ -48,7 +48,7 @@ fetchUsersCharts()
     chats,
     setChats,
     selectedChat,
-    selectedChat,
+    setSelectedChat,
     theme,
     setTheme
   };
