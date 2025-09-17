@@ -7,8 +7,12 @@ import Community from "./pages/Community";
 import { assets } from "./assets/assets";
 import './assets/prism.css'
 import Loading from "./pages/Loading";
+import { useAppContext } from "./context/AppContext";
+import Login from "./pages/Login";
 
 const App = () => {
+  const { user} = useAppContext()
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {pathname} = useLocation()
 
@@ -23,8 +27,11 @@ const App = () => {
           onClick={() => setIsMenuOpen(true)}
         />
       )}
+{user ?
+(
 
-      <div className=" dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white">
+
+  <div className=" dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white">
         <div className=" flex h-screen w-screen">
           <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
           <Routes>
@@ -34,6 +41,10 @@ const App = () => {
           </Routes>
         </div>
       </div>
+      ):(
+  <div className=" dark:bg-gradient-to-b from-[#242124] to-[#000000] flex items-center justify-center h-screen w-screen">
+        <Login/>
+      </div>)}
     </>
   );
 };

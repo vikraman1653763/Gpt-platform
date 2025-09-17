@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
 const ChatSchema = new mongoose.Schema({
   userId: { type: String, ref: "User", required: true },
   userName: { type: String, required: true },

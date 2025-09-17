@@ -6,7 +6,7 @@ const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(true);
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");

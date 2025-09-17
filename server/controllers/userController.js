@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import Chat from "../models/Chat.js";
 
 const generateToken = (id) => {
   return jwt.sign({ userId: id }, process.env.JWT_SECRET, {
@@ -47,8 +48,34 @@ export const loginUser = async (req, res) => {
 // get user
 export const getUser = async (req, res) => {
   try {
-    const user = req.user
-    return res.json({success:true,user})    
+    const user = req.user;
+    return res.json({ success: true, user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// get published images
+export const getPublishedImages = async (req, res) => {
+  try {
+    const publishedImageMessages = await Chat.aggregate([
+      { $unwind: "$messages" },
+      {
+        $match: {
+          "messages.isImage": true,
+          "messages.isPublished": true,
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          imageUrl: "$messages.content",
+          userName: "$userName",
+        },
+      },
+    ]);
+    res.json({ success: true, image: publishedImageMessages.reverse() });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ success: false, message: error.message });
