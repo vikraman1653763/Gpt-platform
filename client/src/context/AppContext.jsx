@@ -166,7 +166,7 @@ export const AppContextProvider = ({ children }) => {
     createNewChat,
     fetchUsersChats,
 
-    axios, // expose configured axios
+    axios, // expose configured axios 
     logout,
   };
 

@@ -96,9 +96,9 @@ const deleteChat = async (e, chatId) => {
         />
       </div>
       {/* Recernt chats  */}
-      {chats.length > 0 && <p className=" mt-4 text-sm">Recent Chats</p>}
+      {chats?.length > 0 && <p className=" mt-4 text-sm">Recent Chats</p>}
       <div className="flex-1 overflow-scroll mt-3 text-sm space-y-3">
-        {chats
+        {(chats??[])
           .filter((chat) =>
             chat.messages[0]
               ? chat.messages[0]?.content
@@ -183,18 +183,18 @@ const deleteChat = async (e, chatId) => {
             alt="theme"
           />
           <p>Dark Mode</p>
-          <label className="relative cursor-pointer inline-flex">
-            <input
-              type="checkbox"
-              checked={theme === "dark"}
-              onClick={() => {
-                setTheme(theme === "dark" ? "light" : "dark");
-              }}
-              className=" sr-only peer"
-            />
-            <div className=" w-9 h-5 bg-gray-400 rounded-full peer-checked:bg-purple-600 transition-all"></div>
-            <span className=" absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition-transform peer-checked:translate-x-4"></span>
-          </label>
+          <label className="relative cursor-pointer inline-flex items-center">
+  <input
+    type="checkbox"
+    checked={theme === "dark"}
+    onChange={() => setTheme(theme === "dark" ? "light" : "dark")}
+    className="sr-only peer"
+    aria-label="Toggle dark mode"
+  />
+  <div className="w-9 h-5 bg-gray-400 rounded-full peer-checked:bg-purple-600 transition-all"></div>
+  <span className="absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition-transform peer-checked:translate-x-4"></span>
+</label>
+
         </div>
       </div>
       {/* USer Account*/}

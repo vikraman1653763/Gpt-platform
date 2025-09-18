@@ -70,9 +70,19 @@ const ChatBox = () => {
       toast.error(error?.message || "Request failed");
     } finally {
       setLoading(false);
+      setPrompt('')
     }
   };
 
+  
+  useEffect(() => {
+    if (selectedChat?.messages) {
+      setMessages(selectedChat.messages);
+    } else {
+      setMessages([]);
+    }
+  }, [selectedChat]);
+ 
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.scrollTo({
@@ -81,15 +91,7 @@ const ChatBox = () => {
       });
     }
   }, [messages]);
-
-  useEffect(() => {
-    if (selectedChat?.messages) {
-      setMessages(selectedChat.messages);
-    } else {
-      setMessages([]);
-    }
-  }, [selectedChat]);
-
+  
   return (
     <div className=" flex-1 flex flex-col justify-between m-5 md:m-10 xl:mx-30 max-md:mt-14 2xl:pr-40">
       {/* chat messages */}
